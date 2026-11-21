@@ -1,0 +1,51 @@
+% Рисунок 2.1 — стохастична мережа Петрі моделі B14 (розкладка відповідає model/B14.pnml)
+\begin{tikzpicture}[
+    font=\setstretch{1}\fontsize{11}{13}\selectfont, >={Stealth[length=2mm]},
+    pl/.style={draw, circle, minimum size=8mm, inner sep=0pt},
+    tr/.style={draw, fill=black!12, rectangle, minimum width=2.2mm, minimum height=9mm, inner sep=0pt},
+    arc/.style={->},
+    rd/.style={->, dashed},
+    nm/.style={font=\setstretch{1}\fontsize{10}{12}\selectfont},
+    par/.style={font=\setstretch{1}\fontsize{10}{12}\selectfont, align=center},
+    w/.style={font=\setstretch{1}\fontsize{10}{12}\selectfont, fill=white, inner sep=1pt},
+  ]
+  \def\yA{0} \def\yB{-2.6} \def\yC{-6.0}
+  \def\xS{7.2}
+  % Джерела та підчерги
+  \foreach \i/\y/\l in {A/\yA/\lambda_A, B/\yB/\lambda_B, C/\yC/\lambda_C}{
+    \node[pl, label={[nm]above:Gen\i}] (Gen\i) at (0,\y) {1};
+    \node[tr, label={[nm]above:Arr\i}, label={[par]below:$\exp(1/\l)$}] (Arr\i) at (1.8,\y) {};
+    \node[pl, label={[nm]above:Q\i}] (Q\i) at (3.6,\y) {};
+    \draw[arc] ([yshift=1.2mm]Gen\i.east) -- ([yshift=1.2mm]Arr\i.west);
+    \draw[arc] ([yshift=-1.2mm]Arr\i.west) -- ([yshift=-1.2mm]Gen\i.east);
+    \draw[arc] (Arr\i) -- (Q\i);
+  }
+  % Виконання
+  \node[tr, label={[nm]above:ServA}, label={[par]below left:$\exp(4)$; $r_A$, $b_A$}] (ServA) at (\xS,\yA) {};
+  \node[tr, label={[nm]above right:ServB}, label={[par]below left:$\exp(5)$; $r_B$, $b_B$}] (ServB) at (\xS,\yB) {};
+  \node[tr, label={[nm]below left:ServC}, label={[par]below right:$\exp(10)$}] (ServC) at (\xS,\yC) {};
+  % Виходи
+  \node[pl, label={[nm]above:OutA}] (OutA) at (14.3,\yA) {};
+  \node[pl, label={[nm]left:OutB}] (OutB) at (5.8,-1.3) {};
+  \node[pl, label={[nm]above:OutC}] (OutC) at (14.3,\yC) {};
+  % Памʼять і резервування
+  \node[pl, label={[nm]right:Mem}] (Mem) at (12.5,\yB) {2};
+  \node[tr, label={[nm]above right:ResC}, label={[par]above left:$0$; $r_C$}] (ResC) at (5.0,-4.4) {};
+  \node[pl, label={[nm]right:RC}] (RC) at (6.1,-5.25) {};
+  % Дуги
+  \draw[arc] (QA) -- (ServA);
+  \draw[arc] (QB) -- (ServB);
+  \draw[arc] (QC) -- (ServC);
+  \draw[arc] (ServA) -- (OutA);
+  \draw[arc] (ServB) -- (OutB);
+  \draw[arc] (ServC) -- (OutC);
+  \draw[arc] (Mem) to[bend left=5] (ServA);
+  \draw[arc] (ServA) to[bend left=5] (Mem);
+  \draw[arc] ([yshift=1.2mm]ServB.east) -- ([yshift=1.2mm]Mem.west);
+  \draw[arc] ([yshift=-1.2mm]Mem.west) -- ([yshift=-1.2mm]ServB.east);
+  \draw[arc] (Mem) -- node[w, pos=0.45, below] {$k_C$} (ResC);
+  \draw[arc] (ResC) -- node[w, above right] {$k_C$} (RC);
+  \draw[arc] (RC) -- node[w, below left] {2} (ServC);
+  \draw[arc] (ServC) -- node[w, pos=0.5, below right] {2} (Mem);
+  \draw[rd] (QC) -- (ResC);
+\end{tikzpicture}

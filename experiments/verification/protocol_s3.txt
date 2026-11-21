@@ -1,0 +1,148 @@
+     t, хв | вихід маркерів (−)           | вхід маркерів (+)                  | QA QB QC Mem RC | nA nB nC
+    0.0000 |                              | ArrC ArrB ArrA                     |  0  0  0   2  0 |  0  0  0
+    2.0096 | ArrC                         | ResC ResC ArrC                     |  0  0  1   0  0 |  0  0  0
+    2.0096 | ResC ResC                    | ServC                              |  0  0  0   0  0 |  0  0  1
+    2.3860 | ArrC                         | ArrC                               |  0  0  1   0  0 |  0  0  1
+    3.7394 | ArrB                         | ArrB                               |  0  1  1   0  0 |  0  0  1
+   12.4138 | ArrA                         | ArrA                               |  1  1  1   0  0 |  0  0  1
+   13.3963 | ArrA                         | ArrA                               |  2  1  1   0  0 |  0  0  1
+   15.1374 | ArrB                         | ArrB                               |  2  2  1   0  0 |  0  0  1
+   20.3320 | ArrA                         | ArrA                               |  3  2  1   0  0 |  0  0  1
+   22.8348 | ArrB                         | ArrB                               |  3  3  1   0  0 |  0  0  1
+   23.6960 | ServC                        | ResC ResC                          |  3  3  1   0  0 |  0  0  0
+   23.6960 | ResC ResC                    | ServC                              |  3  3  0   0  0 |  0  0  1
+   32.8357 | ArrA                         | ArrA                               |  4  3  0   0  0 |  0  0  1
+   33.1924 | ArrA                         | ArrA                               |  5  3  0   0  0 |  0  0  1
+   34.0722 | ServC                        | ServB ServB                        |  5  1  0   0  0 |  0  2  0
+   35.4543 | ServB                        | ServB                              |  5  0  0   0  0 |  0  2  0
+   36.1288 | ServB                        | ServA                              |  4  0  0   0  0 |  1  1  0
+   37.7418 | ServA                        | ServA                              |  3  0  0   0  0 |  1  1  0
+   41.0016 | ServB                        | ServA                              |  2  0  0   0  0 |  2  0  0
+   42.6536 | ServA                        | ServA                              |  1  0  0   0  0 |  2  0  0
+   43.0320 | ServA                        | ServA                              |  0  0  0   0  0 |  2  0  0
+   44.6213 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+   47.7627 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+   52.3271 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+   53.8703 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+   56.7719 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+   59.5501 | ArrB                         | ServB ArrB                         |  0  0  0   0  0 |  1  1  0
+   59.8907 | ArrA                         | ArrA                               |  1  0  0   0  0 |  1  1  0
+   60.0033 | ServB                        | ServA                              |  0  0  0   0  0 |  2  0  0
+   60.5975 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+   61.2901 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+   62.8162 | ArrB                         | ServB ArrB                         |  0  0  0   1  0 |  0  1  0
+   65.7329 | ServB                        |                                    |  0  0  0   2  0 |  0  0  0
+   72.0909 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+   72.1977 | ArrB                         | ServB ArrB                         |  0  0  0   0  0 |  1  1  0
+   73.0197 | ArrB                         | ArrB                               |  0  1  0   0  0 |  1  1  0
+   76.4195 | ServB                        | ServB                              |  0  0  0   0  0 |  1  1  0
+   78.6243 | ServA                        |                                    |  0  0  0   1  0 |  0  1  0
+   79.1334 | ServB                        |                                    |  0  0  0   2  0 |  0  0  0
+   87.3595 | ArrB                         | ServB ArrB                         |  0  0  0   1  0 |  0  1  0
+   87.8587 | ArrC                         | ResC ArrC                          |  0  0  1   0  0 |  0  1  0
+   87.8587 | ResC                         |                                    |  0  0  1   0  1 |  0  1  0
+   90.9072 | ArrB                         | ArrB                               |  0  1  1   0  1 |  0  1  0
+   91.8443 | ServB                        | ResC                               |  0  1  1   0  1 |  0  0  0
+   91.8443 | ResC                         | ServC                              |  0  1  0   0  0 |  0  0  1
+   93.0730 | ArrA                         | ArrA                               |  1  1  0   0  0 |  0  0  1
+   93.1239 | ArrA                         | ArrA                               |  2  1  0   0  0 |  0  0  1
+   95.6310 | ArrA                         | ArrA                               |  3  1  0   0  0 |  0  0  1
+   95.8186 | ServC                        | ServB ServA                        |  2  0  0   0  0 |  1  1  0
+   96.0655 | ServB                        | ServA                              |  1  0  0   0  0 |  2  0  0
+   96.6669 | ServA                        | ServA                              |  0  0  0   0  0 |  2  0  0
+   96.9760 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  101.4663 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  103.7305 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  104.1574 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  104.6856 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  105.0083 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+  106.3043 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  106.7237 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  113.0476 | ArrB                         | ServB ArrB                         |  0  0  0   1  0 |  0  1  0
+  113.9786 | ArrC                         | ResC ArrC                          |  0  0  1   0  0 |  0  1  0
+  113.9786 | ResC                         |                                    |  0  0  1   0  1 |  0  1  0
+  115.2241 | ServB                        | ResC                               |  0  0  1   0  1 |  0  0  0
+  115.2241 | ResC                         | ServC                              |  0  0  0   0  0 |  0  0  1
+  118.0093 | ArrC                         | ArrC                               |  0  0  1   0  0 |  0  0  1
+  123.9196 | ArrA                         | ArrA                               |  1  0  1   0  0 |  0  0  1
+  125.9243 | ServC                        | ResC ResC                          |  1  0  1   0  0 |  0  0  0
+  125.9243 | ResC ResC                    | ServC                              |  1  0  0   0  0 |  0  0  1
+  129.4311 | ServC                        | ServA                              |  0  0  0   1  0 |  1  0  0
+  131.0973 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  137.5596 | ArrB                         | ServB ArrB                         |  0  0  0   1  0 |  0  1  0
+  138.6246 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  1  1  0
+  138.9345 | ServA                        |                                    |  0  0  0   1  0 |  0  1  0
+  139.2665 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  1  1  0
+  144.1606 | ServB                        |                                    |  0  0  0   1  0 |  1  0  0
+  147.4869 | ArrB                         | ServB ArrB                         |  0  0  0   0  0 |  1  1  0
+  149.0125 | ServA                        |                                    |  0  0  0   1  0 |  0  1  0
+  149.7764 | ServB                        |                                    |  0  0  0   2  0 |  0  0  0
+  153.4509 | ArrB                         | ServB ArrB                         |  0  0  0   1  0 |  0  1  0
+  153.5940 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  1  1  0
+  153.6871 | ArrA                         | ArrA                               |  1  0  0   0  0 |  1  1  0
+  154.4873 | ServA                        | ServA                              |  0  0  0   0  0 |  1  1  0
+  160.9570 | ArrA                         | ArrA                               |  1  0  0   0  0 |  1  1  0
+  163.5079 | ArrB                         | ArrB                               |  1  1  0   0  0 |  1  1  0
+  165.2228 | ServA                        | ServB                              |  1  0  0   0  0 |  0  2  0
+  165.7725 | ServB                        | ServA                              |  0  0  0   0  0 |  1  1  0
+  166.4096 | ServB                        |                                    |  0  0  0   1  0 |  1  0  0
+  167.3527 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+  169.7452 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  171.9722 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+  172.3427 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  173.2918 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  195.6387 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  197.3629 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  197.3880 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  200.4072 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  205.1198 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  205.2099 | ArrB                         | ServB ArrB                         |  0  0  0   0  0 |  1  1  0
+  205.5696 | ServA                        |                                    |  0  0  0   1  0 |  0  1  0
+  205.8783 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  1  1  0
+  209.2649 | ServA                        |                                    |  0  0  0   1  0 |  0  1  0
+  210.0811 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  1  1  0
+  211.1471 | ArrA                         | ArrA                               |  1  0  0   0  0 |  1  1  0
+  211.5274 | ArrA                         | ArrA                               |  2  0  0   0  0 |  1  1  0
+  212.0007 | ArrB                         | ArrB                               |  2  1  0   0  0 |  1  1  0
+  213.0692 | ServA                        | ServB                              |  2  0  0   0  0 |  0  2  0
+  215.0307 | ServB                        | ServA                              |  1  0  0   0  0 |  1  1  0
+  215.0350 | ArrC                         | ArrC                               |  1  0  1   0  0 |  1  1  0
+  215.4872 | ServB                        | ResC                               |  1  0  1   0  0 |  1  0  0
+  215.4872 | ResC                         |                                    |  1  0  1   0  1 |  1  0  0
+  215.6174 | ServA                        | ResC                               |  1  0  1   0  1 |  0  0  0
+  215.6174 | ResC                         | ServC                              |  1  0  0   0  0 |  0  0  1
+  216.1014 | ArrA                         | ArrA                               |  2  0  0   0  0 |  0  0  1
+  224.1703 | ArrA                         | ArrA                               |  3  0  0   0  0 |  0  0  1
+  228.9406 | ArrB                         | ArrB                               |  3  1  0   0  0 |  0  0  1
+  229.4988 | ServC                        | ServB ServA                        |  2  0  0   0  0 |  1  1  0
+  229.6883 | ServB                        | ServA                              |  1  0  0   0  0 |  2  0  0
+  230.4544 | ServA                        | ServA                              |  0  0  0   0  0 |  2  0  0
+  230.8005 | ArrB                         | ArrB                               |  0  1  0   0  0 |  2  0  0
+  233.9729 | ServA                        | ServB                              |  0  0  0   0  0 |  1  1  0
+  234.5673 | ArrA                         | ArrA                               |  1  0  0   0  0 |  1  1  0
+  238.5250 | ServB                        | ServA                              |  0  0  0   0  0 |  2  0  0
+  240.4540 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  240.6544 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+  241.3170 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  241.6212 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  247.4227 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  255.4195 | ArrC                         | ResC ArrC                          |  0  0  1   0  0 |  1  0  0
+  255.4195 | ResC                         |                                    |  0  0  1   0  1 |  1  0  0
+  259.6180 | ServA                        | ResC                               |  0  0  1   0  1 |  0  0  0
+  259.6180 | ResC                         | ServC                              |  0  0  0   0  0 |  0  0  1
+  262.5029 | ArrA                         | ArrA                               |  1  0  0   0  0 |  0  0  1
+  263.4247 | ServC                        | ServA                              |  0  0  0   1  0 |  1  0  0
+  269.2582 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  270.6853 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  274.3528 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  280.5667 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  280.8556 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+  281.2019 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  282.1225 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  284.3579 | ArrA                         | ServA ArrA                         |  0  0  0   1  0 |  1  0  0
+  288.7067 | ArrA                         | ServA ArrA                         |  0  0  0   0  0 |  2  0  0
+  288.7739 | ServA                        |                                    |  0  0  0   1  0 |  1  0  0
+  288.9711 | ServA                        |                                    |  0  0  0   2  0 |  0  0  0
+  289.6473 | ArrC                         | ResC ResC ArrC                     |  0  0  1   0  0 |  0  0  0
+  289.6473 | ResC ResC                    | ServC                              |  0  0  0   0  0 |  0  0  1
+  293.3426 | ArrC                         | ArrC                               |  0  0  1   0  0 |  0  0  1

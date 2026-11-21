@@ -1,0 +1,16 @@
+→ ../experiments/results/trajectories_long.csv
+→ ../experiments/results/trajectories_short.csv
+→ ../experiments/results/trajectories_unstable.csv
+Серія transient: горизонти 5000000 / 60000 / 200000 хв, статистика від 0, seed = 20261119 + номер серії/точки/прогону, 3.1 с
+→ ../experiments/results/pilot.csv
+Серія pilot: T_мод = 3500000 хв, T_п = 20000 хв, seed = 20261119 + номер серії/точки/прогону, 11.7 с
+→ ../experiments/results/factorial.csv
+Серія factorial: T_мод = 3500000 хв, T_п = 20000 хв, seed = 20261119 + номер серії/точки/прогону, 40.5 с
+→ ../experiments/results/trajectories_improved.csv
+→ ../experiments/results/improvement.csv
+Серія improvement: T_мод = 3500000 хв, T_п = 20000 хв, seed = 20261119 + номер серії/точки/прогону, 52.7 с
+→ ../experiments/results/trajectories_boundary.csv
+→ ../experiments/results/boundary.csv
+Серія boundary: T_мод = 3500000 хв, T_п = 20000 хв, seed = 20261119 + номер серії/точки/прогону, 10.3 с
+→ ../experiments/results/flows.csv
+Серія flows: T_мод = 3500000 хв, T_п = 20000 хв, seed = 20261119 + номер серії/точки/прогону, 7.1 с

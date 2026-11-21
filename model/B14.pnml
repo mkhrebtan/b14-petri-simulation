@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="B14" type="http://www.pnml.org/version-2009/grammar/ptnet">
+    <name>
+      <text>B14</text>
+    </name>
+    <page id="object0">
+      <name>
+        <text>Free elements</text>
+      </name>
+      <toolspecific tool="PetriObjModel" version="2.8.1">
+        <petriObject contentVisible="true" index="0" modelId="free" name="Free elements" priority="0" x="0" y="0"/>
+      </toolspecific>
+      <place id="GenA">
+        <name>
+          <text>GenA</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="-520" y="-300"/>
+        </graphics>
+      </place>
+      <place id="GenB">
+        <name>
+          <text>GenB</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="-520" y="0"/>
+        </graphics>
+      </place>
+      <place id="GenC">
+        <name>
+          <text>GenC</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="-520" y="330"/>
+        </graphics>
+      </place>
+      <place id="QA">
+        <name>
+          <text>QA</text>
+        </name>
+        <graphics>
+          <position x="-200" y="-300"/>
+        </graphics>
+      </place>
+      <place id="QB">
+        <name>
+          <text>QB</text>
+        </name>
+        <graphics>
+          <position x="-200" y="0"/>
+        </graphics>
+      </place>
+      <place id="QC">
+        <name>
+          <text>QC</text>
+        </name>
+        <graphics>
+          <position x="-200" y="330"/>
+        </graphics>
+      </place>
+      <place id="Mem">
+        <name>
+          <text>Mem</text>
+        </name>
+        <initialMarking>
+          <text>2</text>
+        </initialMarking>
+        <graphics>
+          <position x="600" y="0"/>
+        </graphics>
+      </place>
+      <place id="RC">
+        <name>
+          <text>RC</text>
+        </name>
+        <graphics>
+          <position x="30" y="270"/>
+        </graphics>
+      </place>
+      <place id="OutA">
+        <name>
+          <text>OutA</text>
+        </name>
+        <graphics>
+          <position x="760" y="-300"/>
+        </graphics>
+      </place>
+      <place id="OutB">
+        <name>
+          <text>OutB</text>
+        </name>
+        <graphics>
+          <position x="0" y="-150"/>
+        </graphics>
+      </place>
+      <place id="OutC">
+        <name>
+          <text>OutC</text>
+        </name>
+        <graphics>
+          <position x="760" y="330"/>
+        </graphics>
+      </place>
+      <transition id="ArrA">
+        <name>
+          <text>ArrA</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <timeDelay>5.0</timeDelay>
+          <delayMeanValue>5.0</delayMeanValue>
+          <distribution>exp</distribution>
+        </toolspecific>
+        <graphics>
+          <position x="-360" y="-300"/>
+        </graphics>
+      </transition>
+      <transition id="ArrB">
+        <name>
+          <text>ArrB</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <timeDelay>14.2857</timeDelay>
+          <delayMeanValue>14.2857</delayMeanValue>
+          <distribution>exp</distribution>
+        </toolspecific>
+        <graphics>
+          <position x="-360" y="0"/>
+        </graphics>
+      </transition>
+      <transition id="ArrC">
+        <name>
+          <text>ArrC</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <timeDelay>16.6667</timeDelay>
+          <delayMeanValue>16.6667</delayMeanValue>
+          <distribution>exp</distribution>
+        </toolspecific>
+        <graphics>
+          <position x="-360" y="330"/>
+        </graphics>
+      </transition>
+      <transition id="ServA">
+        <name>
+          <text>ServA</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <timeDelay>4.0</timeDelay>
+          <delayMeanValue>4.0</delayMeanValue>
+          <priority>3</priority>
+          <distribution>exp</distribution>
+        </toolspecific>
+        <graphics>
+          <position x="120" y="-300"/>
+        </graphics>
+      </transition>
+      <transition id="ServB">
+        <name>
+          <text>ServB</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <timeDelay>5.0</timeDelay>
+          <delayMeanValue>5.0</delayMeanValue>
+          <priority>2</priority>
+          <distribution>exp</distribution>
+        </toolspecific>
+        <graphics>
+          <position x="120" y="0"/>
+        </graphics>
+      </transition>
+      <transition id="ResC">
+        <name>
+          <text>ResC</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <priority>1</priority>
+        </toolspecific>
+        <graphics>
+          <position x="-70" y="190"/>
+        </graphics>
+      </transition>
+      <transition id="ServC">
+        <name>
+          <text>ServC</text>
+        </name>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <timeDelay>10.0</timeDelay>
+          <delayMeanValue>10.0</delayMeanValue>
+          <distribution>exp</distribution>
+        </toolspecific>
+        <graphics>
+          <position x="120" y="330"/>
+        </graphics>
+      </transition>
+      <arc id="a1" source="GenA" target="ArrA">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="b1" source="GenB" target="ArrB">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="c1" source="GenC" target="ArrC">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sa1" source="QA" target="ServA">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sa2" source="Mem" target="ServA">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sb1" source="QB" target="ServB">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sb2" source="Mem" target="ServB">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="r1" source="QC" target="ResC">
+        <inscription>
+          <text>1</text>
+        </inscription>
+        <toolspecific tool="PetriObjModel" version="2.8.1">
+          <informational>true</informational>
+        </toolspecific>
+      </arc>
+      <arc id="r2" source="Mem" target="ResC">
+        <inscription>
+          <text>2</text>
+        </inscription>
+      </arc>
+      <arc id="sc1" source="QC" target="ServC">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sc2" source="RC" target="ServC">
+        <inscription>
+          <text>2</text>
+        </inscription>
+      </arc>
+      <arc id="a2" source="ArrA" target="GenA">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="a3" source="ArrA" target="QA">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="b2" source="ArrB" target="GenB">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="b3" source="ArrB" target="QB">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="c2" source="ArrC" target="GenC">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="c3" source="ArrC" target="QC">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sa3" source="ServA" target="Mem">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sa4" source="ServA" target="OutA">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sb3" source="ServB" target="Mem">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="sb4" source="ServB" target="OutB">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+      <arc id="r3" source="ResC" target="RC">
+        <inscription>
+          <text>2</text>
+        </inscription>
+      </arc>
+      <arc id="sc3" source="ServC" target="Mem">
+        <inscription>
+          <text>2</text>
+        </inscription>
+      </arc>
+      <arc id="sc4" source="ServC" target="OutC">
+        <inscription>
+          <text>1</text>
+        </inscription>
+      </arc>
+    </page>
+    <toolspecific tool="PetriObjModel" version="2.8.1">
+      <petriObjectLinks/>
+    </toolspecific>
+  </net>
+</pnml>

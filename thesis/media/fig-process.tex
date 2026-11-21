@@ -1,0 +1,38 @@
+% Рисунок 1.2 — процес проходження одного завдання типу i через систему
+\begin{tikzpicture}[
+    font=\setstretch{1}\fontsize{11}{13}\selectfont, >={Stealth[length=2.2mm]}, node distance=3mm,
+    ev/.style={draw, circle, minimum size=6mm},
+    act/.style={draw, rectangle, rounded corners=3pt, align=center, text width=80mm, minimum height=6mm},
+    dec/.style={draw, diamond, aspect=2.2, align=center, text width=30mm, inner sep=1pt},
+    note/.style={draw, dashed, rectangle, align=left, text width=46mm, font=\setstretch{1}\fontsize{10}{12}\selectfont},
+    flow/.style={->, thick},
+  ]
+  \node[ev] (start) {};
+  \node[act, below=of start] (arr) {Надходження завдання типу $i\in\{A,B,C\}$};
+  \node[act, below=of arr] (enq) {Постановка в кінець черги типу $i$};
+  \node[dec, below=6mm of enq] (cond) {Умови старту виконано?};
+  \node[act, below=6mm of cond] (take) {Захоплення $v_i$ од. памʼяті, вихід із черги};
+  \node[act, below=of take] (serv) {Виконання протягом випадкового\\часу з~середнім $1/\mu_i$};
+  \node[act, below=of serv] (rel) {Звільнення $v_i$ од. памʼяті};
+  \node[act, below=of rel] (dep) {Вихід завдання із системи};
+  \node[ev, very thick, below=of dep] (end) {};
+  \node[act, text width=33mm, left=9mm of cond] (wait) {Очікування в черзі};
+  \node[note, right=7mm of cond] (cn) {Умови старту:\\
+    1) завдання перше в черзі типу $i$;\\
+    2) у черзі немає завдань вищого пріоритету;\\
+    3) вільна памʼять не менша за $v_i$};
+
+  \draw[flow] (start) -- (arr);
+  \draw[flow] (arr) -- (enq);
+  \draw[flow] (enq) -- (cond);
+  \draw[flow] (cond) -- node[right] {так} (take);
+  \draw[flow] (cond.west) -- node[above] {ні} (wait.east);
+  \draw[flow] (wait.north) |- ($(enq.south)!0.5!(cond.north)$);
+  \draw[flow] (take) -- (serv);
+  \draw[flow] (serv) -- (rel);
+  \draw[flow] (rel) -- (dep);
+  \draw[flow] (dep) -- (end);
+  \draw[dotted] (cond.east) -- (cn.west);
+  \draw[->, dashed] (rel.west) -| node[pos=0.75, left, align=right, font=\setstretch{1}\fontsize{10}{12}\selectfont]
+    {звільнення\\памʼяті:\\повторна\\перевірка} (wait.south);
+\end{tikzpicture}

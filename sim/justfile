@@ -1,0 +1,45 @@
+# Модель B14: збірка, тести, верифікація, один прогін
+# Ядро petri-math має бути встановлене в ~/.m2 (mvn install у PetriObjModelPaint).
+JAR := 'target/b14-sim.jar'
+
+default:
+    @just --list
+
+# Компіляція і юніт-тести (JUnit 5)
+test:
+    mvn -o -q test
+
+# Виконуваний jar разом із ядром petri-math
+package:
+    mvn -o -q -DskipTests package
+
+# Серії прогонів верифікації → ../experiments/verification (CSV, протоколи подій), таблиці → ../thesis/media
+verify: package
+    java -jar {{JAR}} verify --out ../experiments/verification | tee ../experiments/verification/verify_console.txt
+    python3 -I ../experiments/verification_tables.py
+
+# Швидкодія: PetriSimulator проти незміненого циклу PetriObjModel.go ядра → ../experiments/verification/benchmark.txt
+bench: package
+    mvn -o -q -DskipTests test-compile
+    java -cp {{JAR}}:target/test-classes ua.kpi.km.b14.petri.KernelSpeedBenchmark 2>/dev/null | tee ../experiments/verification/benchmark.txt
+
+# Один прогін: just run 3 0.6 100000 10000 1 [M]
+run s='3' gamma='0.6' time='100000' warmup='10000' seed='1' memory='2': package
+    java -jar {{JAR}} run --s {{s}} --gamma {{gamma}} --memory {{memory}} --time {{time}} --warmup {{warmup}} --seed {{seed}}
+
+# Експериментальне дослідження (розділ 4: план, межа стійкості γ = 0,75/0,8, серія γ_C) і пробний запуск пропозиції M = 3 (розділ 5): серії прогонів → ../experiments/results, аналіз
+# (Python: python3 -m venv ../experiments/.venv && ../experiments/.venv/bin/pip install -r ../experiments/requirements.txt)
+experiments: package
+    #!/usr/bin/env bash
+    set -euo pipefail
+    out=../experiments/results
+    mkdir -p $out
+    {
+      java -jar {{JAR}} experiment transient --out $out
+      java -jar {{JAR}} experiment pilot --time 3500000 --warmup 20000 --out $out
+      java -jar {{JAR}} experiment factorial --time 3500000 --warmup 20000 --runs 60 --out $out
+      java -jar {{JAR}} experiment improvement --time 3500000 --warmup 20000 --runs 60 --out $out
+      java -jar {{JAR}} experiment boundary --time 3500000 --warmup 20000 --out $out
+      java -jar {{JAR}} experiment flows --time 3500000 --warmup 20000 --runs 60 --out $out
+    } | tee $out/experiments_console.txt
+    ../experiments/.venv/bin/python ../experiments/analysis.py

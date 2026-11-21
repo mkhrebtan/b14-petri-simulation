@@ -1,0 +1,152 @@
+% Рисунок 3.1 — UML-діаграма класів програми (sim/, пакет ua.kpi.km.b14).
+% Члени класів скорочено до тих, що потрібні для розуміння алгоритму:
+% «+» — public, «-» — private, «~» — доступ у межах пакета.
+% Пакет petri-math — бібліотека ядра (без змін); методи, показані в нащадках
+% (StochasticTransition, PetriSimulator), перевизначають однойменні методи ядра.
+\begin{tikzpicture}[
+    font=\setstretch{1}\fontsize{8}{9.4}\selectfont,
+    uml/.style={draw, fill=white, rectangle split, rectangle split parts=3,
+      rectangle split ignore empty parts, rectangle split part align={center,left,left},
+      text width=4.95cm, inner sep=2pt, anchor=north},
+    pkg/.style={draw, dashed, rounded corners=2pt, inner sep=5pt},
+    pkgname/.style={anchor=south west, inner sep=1pt,
+      font=\setstretch{1}\fontsize{9}{11}\selectfont\bfseries},
+    dep/.style={-{Stealth[length=2mm]}, dashed},
+    assoc/.style={-{Stealth[length=2mm]}},
+    comp/.style={{Diamond[length=2.6mm, width=2mm]}-{Stealth[length=2mm]}},
+    agg/.style={{Diamond[open, length=2.6mm, width=2mm]}-{Stealth[length=2mm]}},
+    real/.style={-{Triangle[open, length=2.4mm, width=2.4mm]}, dashed},
+    inherit/.style={-{Triangle[open, length=2.4mm, width=2.4mm]}},
+    ml/.style={font=\setstretch{1}\fontsize{7.5}{9}\selectfont, inner sep=1.5pt},
+  ]
+  \def\xa{0} \def\xb{5.7} \def\xc{11.4}
+  \newcommand\tld{\textasciitilde}
+
+  % ---------------- пакет model ----------------
+  \node[uml] (Params) at (\xa,0) {\centering «record»\\\textbf{ModelParameters}
+    \nodepart{second}+ strategy: Strategy\\+ arrivalRates, meanServiceTimes:\\\quad Map‹TaskType, Double›\\+ memory: int
+    \nodepart{third}+ ofIntensityFactor(s, $\gamma$)\\+ ofRates($\lambda_A$, $\lambda_B$, $\lambda_C$)\\+ withArrivalRate, withMeanServiceTime,\\\quad withMemory\\+ offeredLoad(): double};
+  \node[uml] (Strategy) at (\xa,-3.95) {\centering «enum»\\\textbf{Strategy}
+    \nodepart{second}S1, S2, S3, S4, S5
+    \nodepart{third}+ priority(TaskType): int\\+ launchProbability(TaskType): double\\+ reservationMultiplicity(): int};
+  \node[uml] (TaskType) at (\xa,-6.25) {\centering «enum»\\\textbf{TaskType}
+    \nodepart{second}A, B, C
+    \nodepart{third}+ baseArrivalRate(): double\\+ meanServiceTime(): double\\+ memoryDemand(): int};
+  \node[uml] (Settings) at (\xa,-8.55) {\centering «record»\\\textbf{RunSettings}
+    \nodepart{second}+ simulationTime, warmupTime: double\\+ seed: long};
+
+  \node[uml] (Sim) at (\xb,0) {\centering \textbf{B14Simulation}
+    \nodepart{third}+ run(ModelParameters, RunSettings,\\\quad listenerFactory): SimulationResult};
+  \node[uml] (Calc) at (\xb,-1.75) {\centering \textbf{OutputCalculator}
+    \nodepart{third}\tld{} calculate(B14Net, ModelParameters,\\\quad RunSettings): SimulationResult};
+  \node[uml] (Net) at (\xb,-3.6) {\centering \textbf{B14Net}
+    \nodepart{second}- net: PetriNet\\- queues: EnumMap‹TaskType, PetriP›\\- arrivals, services: EnumMap\\- reservationLimit: PetriP (LimC)
+    \nodepart{third}+ create(ModelParameters,\\\quad RandomGenerator): B14Net\\+ queue(type): PetriP\\+ service(type): StochasticTransition\\+ memoryBalance(): int};
+
+  \node[uml] (Result) at (\xc,0) {\centering «record»\\\textbf{SimulationResult}
+    \nodepart{second}+ byType: Map‹TaskType, TypeMetrics›\\+ queueLength, waitingTime,\\\quad sojournTime, utilization,\\\quad reservedIdle: double};
+  \node[uml] (Metrics) at (\xc,-2.85) {\centering «record»\\\textbf{TypeMetrics}
+    \nodepart{second}+ queueLength, inSystem: double\\+ arrivalRate: double\\+ waitingTime, sojournTime: double\\+ arrivals, completed: long};
+
+  % ---------------- пакет verification ----------------
+  \node[uml] (Runner) at (\xc,-5.75) {\centering \textbf{VerificationRunner}
+    \nodepart{third}+ analyticTable(): CsvTable\\+ variationTable(): CsvTable\\+ singleChangeTable(): CsvTable\\+ instabilityTable(): CsvTable};
+  \node[uml] (Mmc) at (\xc,-7.95) {\centering «record»\\\textbf{MmcQueue}
+    \nodepart{second}+ arrivalRate, serviceRate: double\\+ servers: int
+    \nodepart{third}+ queueLength(), waitingTime(),\\\quad sojournTime(): double};
+  \node[uml] (Monitor) at (\xc,-10.4) {\centering \textbf{InvariantMonitor}
+    \nodepart{second}- net: B14Net\\- highPriorityC: boolean
+    \nodepart{third}+ onStateChanged(t)};
+
+  % ---------------- пакет petri ----------------
+  \node[uml] (Listener) at (\xc,-13.55) {\centering «interface»\\\textbf{SimulationListener}
+    \nodepart{third}+ onStateChanged(t)\\+ onTransitionStarted(t, PetriT)\\+ onTransitionCompleted(t, PetriT)};
+  \node[uml] (Simulator) at (\xc,-15.95) {\centering \textbf{PetriSimulator}
+    \nodepart{second}- conflictResolver: ConflictResolver\\- warmupTime: double
+    \nodepart{third}+ run(simulationTime, warmupTime)\\+ findActiveT(): ArrayList‹PetriT›\\+ doConflikt(enabled): PetriT\\- advanceTimeTo(time)};
+  \node[uml, text width=3.9cm] (Resolver) at (\xc-0.95,-18.75) {\centering \textbf{ConflictResolver}
+    \nodepart{second}- random: RandomGenerator
+    \nodepart{third}+ choose(enabled): PetriT};
+
+  \node[uml] (STrans) at (\xb,-13.55) {\centering \textbf{StochasticTransition}
+    \nodepart{second}- delay: Delay\\- random: RandomGenerator\\- starts, completions: long
+    \nodepart{third}+ getTimeServ(): double\\+ actIn(places, t)\\+ actOut(places, t)\\+ completions(): long};
+
+  \node[uml] (Builder) at (\xa,-13.55) {\centering \textbf{PetriNetBuilder}
+    \nodepart{third}+ place(name, m): PetriP\\+ transition(name): TransitionBuilder\\+ build(): PetriNet};
+  \node[uml] (Delay) at (\xa,-15.75) {\centering «sealed interface»\\\textbf{Delay}
+    \nodepart{second}Constant(value), Exponential(mean)
+    \nodepart{third}+ sample(RandomGenerator): double};
+
+  % ---------------- пакет experiment (розділ 4) ----------------
+  \node[uml, text width=3.3cm] (Traj) at (-0.75,-10.9) {\centering \textbf{ResponseTrajectory}
+    \nodepart{second}- net: B14Net\\- step: double
+    \nodepart{third}+ onStateChanged(t)\\+ points(): List‹Point›};
+  \node[uml, text width=3.3cm] (Exp) at (2.85,-10.9) {\centering \textbf{ExperimentRunner}
+    \nodepart{third}+ run(series, out, \ldots)\\+ factorialTable(\ldots)\\\tld{} seed(series, cell, k)};
+
+  % ---------------- бібліотека petri-math (ядро) ----------------
+  \node[uml] (KNet) at (\xa,-20.75) {\centering \textbf{PetriNet}
+    \nodepart{second}- ListP: PetriP[]\\- ListT: PetriT[]\\- ListIn: ArcIn[]; ListOut: ArcOut[]};
+  \node[uml] (KT) at (\xb,-20.75) {\centering \textbf{PetriT}
+    \nodepart{second}- priority: int; probability: double\\- buffer: int; timeOut: List‹Double›
+    \nodepart{third}+ actIn(places, t); actOut(places, t)\\+ getTimeServ(); getMean(): double};
+  \node[uml] (KSim) at (\xc,-20.75) {\centering \textbf{PetriSim}
+    \nodepart{third}+ findActiveT(): ArrayList‹PetriT›\\+ input(); output(); eventMin()\\+ doConflikt(list): PetriT\\+ doStatistics(a)};
+
+  \coordinate (k2) at ($(KT.south)+(0,-0.3)$); % траса асоціації PetriSim -> PetriNet
+
+  % ---------------- рамки пакетів ----------------
+  \begin{scope}[on background layer]
+    \node[pkg, fit=(Params)(Settings)(Sim)(Net)(Result)(Metrics)] (Pmodel) {};
+    \node[pkg, fit=(Runner)(Mmc)(Monitor)] (Pver) {};
+    \node[pkg, fit=(Builder)(Delay)(STrans)(Listener)(Resolver)] (Ppetri) {};
+    \node[pkg, fit=(KNet)(KT)(KSim)(k2)] (Pkernel) {};
+    \node[pkg, fit=(Traj)(Exp)] (Pexp) {};
+  \end{scope}
+  \node[pkgname] at (Pmodel.north west) {model};
+  \node[pkgname] at (Pver.north west) {verification};
+  \node[pkgname] at (Ppetri.north west) {petri};
+  \node[pkgname] at (Pkernel.north west) {petri-math (ядро PetriObjModelPaint)};
+  \node[pkgname] at (Pexp.north west) {experiment};
+
+  % ---------------- зв'язки ----------------
+  % model
+  \draw[assoc] (Params) -- (Strategy);
+  \draw[assoc] (Strategy) -- (TaskType);
+  \coordinate (s1) at ([yshift=2mm]Sim.west);
+  \draw[dep] (s1) -- (Params.east |- s1);
+  \coordinate (g1) at ($([yshift=-2mm]Sim.west)+(-0.3,0)$);
+  \draw[dep] ([yshift=-2mm]Sim.west) -- (g1) |- (Net.west);
+  \draw[dep] (g1) |- (Settings.east);
+  \draw[dep] (Sim) -- (Calc);
+  \draw[dep] (Calc) -- (Net);
+  \draw[dep] (Sim.east) -- (Result.west |- Sim.east);
+  \draw[dep] (Calc.east) -| ($(Result.south west)+(0.5,0)$);
+  \draw[comp] (Result) -- node[ml, right]{3} (Metrics);
+  % verification
+  \draw[dep] (Runner) -- (Mmc);
+  \draw[dep] ([yshift=-2mm]Runner.west) -- ++(-0.32,0) |- ([yshift=2mm]Monitor.west);
+  \draw[assoc] ([yshift=-2mm]Monitor.west) -- ++(-0.5,0) |- (Net.east);
+  \draw[real] (Monitor) -- (Listener);
+  % petri
+  \draw[assoc] ([xshift=0.8cm]Net.south) -- node[ml, right, pos=0.93]{*} ([xshift=0.8cm]Net.south |- STrans.north);
+  \coordinate (b1) at ($([xshift=-0.8cm]Net.south)+(0,-6.27)$);
+  \draw[dep] ([xshift=-0.8cm]Net.south) -- (b1) -| (Builder.north);
+  \draw[dep] (Builder.east) -- (Builder.east -| STrans.west);
+  \draw[assoc] (STrans.west |- Delay.east) -- (Delay.east);
+  \draw[agg] (Simulator) -- node[ml, right]{*} (Listener);
+  \draw[comp] (Resolver.north |- Simulator.south) -- (Resolver.north);
+  % experiment: залежність від пакета model (B14Simulation, ModelParameters, RunSettings)
+  \draw[dep] (Exp.west |- Traj.east) -- (Traj.east);
+  \draw[dep] ([xshift=1.0cm]Exp.north) -- ([xshift=1.0cm]Exp.north |- Pmodel.south);
+  \draw[real] (Traj.south) -- ++(0,-0.3) -| ([xshift=-1.6cm]Listener.north);
+  % наслідування від класів ядра
+  \draw[inherit] (STrans) -- (KT);
+  \draw[inherit] ([xshift=2.0cm]Simulator.south) -- ([xshift=2.0cm]Simulator.south |- KSim.north);
+  % petri-math
+  \coordinate (k1) at ($(Builder.west)+(-0.28,0)$);
+  \draw[dep] (Builder.west) -- (k1) |- (KNet.west);
+  \draw[comp] (KNet.east |- KT.west) -- node[ml, above]{*} (KT.west);
+  \draw[assoc] (KSim.south) -- (KSim.south |- k2) -| ([xshift=1.4cm]KNet.south);
+\end{tikzpicture}

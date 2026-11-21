@@ -1,0 +1,90 @@
+% Титульна сторінка за Додатком А навчального посібника (Стеценко, Дифучина, Дифучин, 2024).
+\makeatletter
+\begingroup
+\newgeometry{left=20mm,right=20mm,top=20mm,bottom=20mm}%
+\thispagestyle{empty}%
+% Шапка й блок теми — інтервал 1,5 (як у зразку), блок підписів — одинарний.
+\begin{center}
+\includegraphics[width=105mm]{media/kpi-building.png}
+
+\vspace{0.4cm}
+МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ
+
+НАЦІОНАЛЬНИЙ ТЕХНІЧНИЙ УНІВЕРСИТЕТ УКРАЇНИ
+
+«КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ імені ІГОРЯ СІКОРСЬКОГО»
+
+КАФЕДРА ІНФОРМАТИКИ ТА ПРОГРАМНОЇ ІНЖЕНЕРІЇ
+
+\vspace{1.6cm}
+Курсова робота з освітнього компоненту
+
+«\kpi@g{discipline}»
+
+\vspace{0.3cm}
+Тема: \textbf{\kpi@g{title}}
+\end{center}
+
+\vspace{1.2cm}
+\setstretch{1.0}%
+\noindent
+\begin{minipage}[t]{0.47\textwidth}
+\raggedright
+\textbf{Керівник:}
+
+\kpi@g{advisor}
+
+\vspace{0.6cm}
+«Допущено до захисту»
+
+\sigline{5cm}
+
+\vspace{0.3cm}
+«\sigline{0.8cm}» \sigline{3cm} 20\sigline{0.6cm} р.
+
+\vspace{0.6cm}
+Захищено з оцінкою
+
+\sigline{5cm}
+
+\vspace{0.6cm}
+Члени комісії:
+
+\vspace{0.3cm}
+\sigline{5cm}
+
+\vspace{0.3cm}
+\sigline{5cm}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.47\textwidth}
+\raggedright
+\textbf{Виконавець:}
+
+\kpi@g{student}
+
+студент групи \kpi@g{group}
+
+залікова книжка № \kpi@gradebook
+
+\sigline{5cm}
+
+\vspace{0.3cm}
+«\sigline{0.8cm}» \sigline{3cm} 20\sigline{0.6cm} р.
+
+\vspace{3.15cm}
+\vspace{0.3cm}
+Інна СТЕЦЕНКО
+
+\vspace{0.6cm}
+\cwAdvisorShort
+\end{minipage}
+
+\vfill
+\begin{center}
+\textbf{Київ -- \kpi@g{year}}
+\end{center}
+\restoregeometry
+\endgroup
+\clearpage
+\makeatother

@@ -1,0 +1,24 @@
+.DS_Store
+# Java / Maven
+target/
+*.class
+.idea/
+*.iml
+# LaTeX
+build/
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+# Python
+__pycache__/
+.venv/
+*.pyc

@@ -1,0 +1,33 @@
+% Рисунок 5.1 — фрагмент мережі рисунка 2.1 після змін пропозиції розділу 5 (M = 3, позиція LimC);
+% стиль — як у fig-petri.tex. Код: B14Net (позиція LimC створюється лише за M > v_C).
+\begin{tikzpicture}[
+    font=\setstretch{1}\fontsize{11}{13}\selectfont, >={Stealth[length=2mm]},
+    pl/.style={draw, circle, minimum size=8mm, inner sep=0pt},
+    tr/.style={draw, fill=black!12, rectangle, minimum width=2.2mm, minimum height=9mm, inner sep=0pt},
+    arc/.style={->},
+    rd/.style={->, dashed},
+    nm/.style={font=\setstretch{1}\fontsize{10}{12}\selectfont},
+    par/.style={font=\setstretch{1}\fontsize{10}{12}\selectfont, align=center},
+    w/.style={font=\setstretch{1}\fontsize{10}{12}\selectfont, fill=white, inner sep=1pt},
+  ]
+  \node[pl, label={[nm]left:QC}] (QC) at (0,0) {};
+  \node[tr, label={[nm]above left:ResC}, label={[par]below left:$0$; $r_C$}] (ResC) at (2.4,0) {};
+  \node[pl, label={[nm]below:RC}] (RC) at (4.6,0) {};
+  \node[tr, label={[nm]above right:ServC}, label={[par]below right:$\exp(10)$}] (ServC) at (6.8,0) {};
+  \node[pl, label={[nm]right:OutC}] (OutC) at (9.0,0) {};
+  \node[pl, label={[nm]above right:Mem}] (Mem) at (4.6,1.9) {3};
+  \node[pl, label={[nm]below:LimC}] (LimC) at (4.6,-1.9) {2};
+  \node[nm, align=right] (AB) at (1.5,1.9) {ServA,\\ ServB};
+  % Дуги
+  \draw[rd] (QC) -- (ResC);
+  \draw[arc] (QC.north) |- (2.4,3.0) -| (ServC.north);
+  \draw[arc] (Mem) -- node[w, above left] {$k_C$} (ResC);
+  \draw[arc] (LimC) -- node[w, below left] {$k_C$} (ResC);
+  \draw[arc] (ResC) -- node[w, above] {$k_C$} (RC);
+  \draw[arc] (RC) -- node[w, above] {2} (ServC);
+  \draw[arc] (ServC) -- node[w, above right] {2} (Mem);
+  \draw[arc] (ServC) -- node[w, below right] {2} (LimC);
+  \draw[arc] (ServC) -- (OutC);
+  \draw[arc] ([yshift=1.2mm]Mem.west) -- ([yshift=1.2mm]AB.east);
+  \draw[arc] ([yshift=-1.2mm]AB.east) -- ([yshift=-1.2mm]Mem.west);
+\end{tikzpicture}

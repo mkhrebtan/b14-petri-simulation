@@ -1,0 +1,46 @@
+% Рисунок 1.1 — структура інформаційної системи (концептуальна модель)
+\begin{tikzpicture}[
+    font=\setstretch{1}\fontsize{11}{13}\selectfont, >={Stealth[length=2.2mm]}, node distance=4mm and 6mm,
+    src/.style={draw, ellipse, align=center, inner sep=1.5pt, minimum width=22mm},
+    queue/.style={draw, rectangle, minimum width=24mm, minimum height=9mm, align=left, text width=13mm},
+    blk/.style={draw, rectangle, rounded corners=2pt, align=center, inner sep=4pt},
+    flow/.style={->, thick},
+    res/.style={->, dashed},
+  ]
+  % Джерела
+  \node[src] (sA) {Джерело A\\$\lambda_A$};
+  \node[src, below=of sA] (sB) {Джерело B\\$\lambda_B$};
+  \node[src, below=of sB] (sC) {Джерело C\\$\lambda_C$};
+  % Черги
+  \node[queue, right=of sA] (qA) {Черга A};
+  \node[queue, right=of sB] (qB) {Черга B};
+  \node[queue, right=of sC] (qC) {Черга C};
+  \foreach \q in {qA,qB,qC}{
+    \foreach \x in {0.72,0.84,0.96}{
+      \draw ($(\q.north west)!\x!(\q.north east)$) -- ($(\q.south west)!\x!(\q.south east)$);
+    }
+  }
+  \node[draw, dotted, inner sep=3pt, fit=(qA)(qC), label={[align=center]above:Упорядкована\\черга}] (Q) {};
+  % Диспетчер
+  \node[blk, right=6mm of Q, minimum height=36mm, text width=24mm] (disp)
+    {Вибір завдання за~стратегією пріоритетів~$s$};
+  % Обробка
+  \node[blk, right=7mm of disp, text width=36mm, minimum height=24mm] (cpu)
+    {Виконання завдань\\[2pt]
+     A: $v_A=1$, $1/\mu_A$\\
+     B: $v_B=1$, $1/\mu_B$\\
+     C: $v_C=2$, $1/\mu_C$};
+  \node[blk, above=7mm of cpu, text width=36mm] (mem) {Оперативна памʼять\\$M=2$ од.};
+  \node[src, minimum width=14mm, right=5mm of cpu] (out) {Вихід};
+  % Зв'язки
+  \draw[flow] (sA) -- (qA);
+  \draw[flow] (sB) -- (qB);
+  \draw[flow] (sC) -- (qC);
+  \draw[flow] (qA.east) -- (qA.east -| disp.west);
+  \draw[flow] (qB.east) -- (qB.east -| disp.west);
+  \draw[flow] (qC.east) -- (qC.east -| disp.west);
+  \draw[flow] (disp.east |- cpu) -- (cpu.west);
+  \draw[flow] (cpu) -- (out);
+  \draw[res] (mem.west) -| node[pos=0.25, above, font=\fontsize{10}{12}\selectfont] {захоплення $v_i$} (disp.north);
+  \draw[res] ([xshift=6mm]cpu.north) -- node[right, font=\fontsize{10}{12}\selectfont] {звільнення $v_i$} ([xshift=6mm]mem.south);
+\end{tikzpicture}

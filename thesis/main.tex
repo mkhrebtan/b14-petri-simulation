@@ -1,0 +1,186 @@
+% Курсова робота з ОК «Моделювання систем. Курсова робота», варіант B14.
+% Структура — за вказівками лектора та розд. 4 навчального посібника (Стеценко та ін., 2024).
+\documentclass[coursework]{kpi-thesis}
+\usepackage{kpi-titles}
+% Формули -- гарнітурою, сумісною з Times New Roman основного тексту: клас
+% лишає Computer Modern. XeLaTeX -> unicode-math; \mathrm, \text -- шрифт тексту (Times New Roman).
+\usepackage{unicode-math}
+\setmathfont{STIXTwoMath-Regular.otf}
+% Міжрядковий інтервал 1,5 (розд. 4.5 посібника) — як у Word: 1,5 × 1,15 × 14 пт ≈ 24,15 пт.
+% \onehalfspacing класу для 14 пт дає множник 1,25 від бази 17 пт = 21,25 пт (≈ «1,3» у Word).
+\setstretch{1.42}
+% Схеми процесу (розділ 1) — TikZ, щоб текст на рисунках мав шрифт роботи
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,shapes.multipart,fit,calc,backgrounds}
+% Відмінності від методички диплома — за вказівками лектора до курсової (розд. «Оформлення
+% пояснювальної записки») та розд. 4.5 / Додатками А–Б навчального посібника:
+\kpisetup{
+  left-margin    = 20mm,   % «поля ліве, праве, зверху та знизу – 20 мм»
+  hyphenation    = false,  % «Переноси слів не потрібно використовувати» (розд. 4.5 посібника)
+  enumerate      = arabic, % пункти завдання «1)», «2)» (Додаток Б посібника)
+  appendix-title = inline, % «Додаток А. Лістинг коду …» (розд. 4.5 посібника)
+  algorithms,              % псевдокод алгоритму імітації (розділ 3)
+}
+% Заголовок додатка у ЗМІСТІ -- так само, як у тексті: «Додаток А. Лістинг …».
+% Клас пише в зміст «Додаток А Лістинг …» без крапки; визначення \appendix класу (appendix-title =
+% inline) повторено тут з крапкою в \addcontentsline, копію класу не змінюємо.
+\makeatletter
+\RenewDocumentCommand\appendix{o m}{%
+  \clearpage
+  \refstepcounter{section}%
+  \global\advance\c@kpi@appendices\@ne
+  \IfValueT{#1}{\label{#1}}%
+  {\centering Додаток \thesection.\ \textbf{#2}\par}%
+  \addcontentsline{toc}{section}{Додаток \thesection.\ #2}%
+  \vspace{\baselineskip}%
+}
+\makeatother
+% Підпис таблиці: з абзацного відступу 1,25 см (типове значення класу, ДСТУ 3008:2015 п. 7.6.8)
+% і по ширині рядка (вказівки лектора: «згори таблиці з вирівнюванням по ширині»).
+\captionsetup*[table]{justification=justified}
+% Підписи рисунків і таблиць -- з тим самим інтервалом 1,5, що й текст (\setstretch вище):
+% longtable і плаваючі обʼєкти інакше скидають міжрядковий інтервал до одинарного.
+\captionsetup{font+={stretch=1.42}}
+% Клас задає \LTcapwidth=\textwidth до left-margin=20mm (текст ще 160 мм), тож підписи longtable
+% (kpitable) центруються у вужчому блоці й зсуваються на 5 мм. Перевиставити за поточною шириною.
+\AtBeginDocument{\setlength{\LTcapwidth}{\textwidth}}
+\kpiset{
+  title         = {Імітаційна модель інформаційної системи обробки завдань трьох типів з пріоритетним
+                   упорядкуванням черги на основі формального опису стохастичною мережею Петрі},
+  discipline    = {Моделювання систем. Курсова робота},
+  group         = {ІП-33},
+  course        = {IV},
+  gender        = {m},
+  student       = {Хребтань Максим Віталійович},
+  gradebook     = {24},
+  advisor       = {Коринецький Дмитро Сергійович},
+  year          = {2026},
+}
+% Поле титулу за Додатком А посібника, якого немає в kpiset
+\newcommand\cwAdvisorShort{Дмитро КОРИНЕЦЬКИЙ}
+
+% Число з іменником у потрібній формі для анотації: \cwStat{tables}{таблицю}{таблиці}{таблиць} ->
+% «24 таблиці». Значення -- з build/main.kpistats (\kpiloadstats в анотації), до першої збірки «??».
+\ExplSyntaxOn
+\NewDocumentCommand\cwStat{mmmm}{
+  \cs_if_exist:cTF { kpi@stat@main@#1 }
+    {
+      \int_set:Nn \l_tmpa_int { \use:c { kpi@stat@main@#1 } }
+      \int_use:N \l_tmpa_int \nobreakspace
+      \int_set:Nn \l_tmpb_int { \int_mod:nn { \l_tmpa_int } { 100 } }
+      \bool_if:nTF { \int_compare_p:n { 11 <= \l_tmpb_int <= 14 } } {#4}
+        {
+          \int_case:nnF { \int_mod:nn { \l_tmpa_int } { 10 } }
+            { {1} {#2} {2} {#3} {3} {#3} {4} {#3} }
+            {#4}
+        }
+    }
+    { \textbf{??}~#4 }
+}
+\ExplSyntaxOff
+
+% Ключові слова псевдокоду (algpseudocode) українською
+% Репозиторій з повним кодом програми й експериментів (Р3, додатки А і В)
+\newcommand\repourl{\url{https://github.com/mkhrebtan/b14-petri-simulation}}
+\algrenewcommand\algorithmicrequire{\textbf{Вхідні дані:}}
+\algrenewcommand\algorithmicif{\textbf{якщо}}
+\algrenewcommand\algorithmicthen{\textbf{то}}
+\algrenewcommand\algorithmicelse{\textbf{інакше}}
+\algrenewcommand\algorithmicfor{\textbf{для}}
+\algrenewcommand\algorithmicforall{\textbf{для всіх}}
+\algrenewcommand\algorithmicwhile{\textbf{поки}}
+\algrenewcommand\algorithmicdo{\textbf{виконувати}}
+\algrenewcommand\algorithmicloop{\textbf{повторювати}}
+\algrenewcommand\algorithmicprocedure{\textbf{процедура}}
+% Фрагменти коду в основному тексті (Р3--Р5) -- 10 пт, без додаткових
+% вертикальних відступів навколо фрагмента (інакше Р3 виходить на 15-ту сторінку трьома рядками);
+% спільний відступ рядків прибирає gobble у кожному \codeinput. Лістинги додатків -- 8 пт класу
+% (\fvset перед \appendices), інакше додатки перевищать 35 с.
+\fvset{fontsize=\setstretch{1}\fontsize{10}{11}\selectfont,
+  listparameters={\setlength\topsep{0pt}\setlength\partopsep{0pt}}}
+% Лістинг одного файлу програми моделі (sim/src/main/java/ua/kpi/km/b14/<шлях>)
+\newcommand\javafile[1]{\par\medskip\Needspace{4\baselineskip}\noindent\textbf{Файл \texttt{#1}}\par
+  \codeinput{../sim/src/main/java/ua/kpi/km/b14/#1}}
+% Фрагмент скрипта статистичної обробки: \pyfrag{назва}{перший рядок}{останній рядок}
+\newcommand\pyfrag[3]{\par\medskip\Needspace{4\baselineskip}\noindent\textbf{#1 (рядки #2--#3)}\par
+  \codeinput[firstline=#2, lastline=#3]{../experiments/analysis.py}}
+
+\begin{document}
+\input{chapters/title}
+\mainmatter
+% Порядок за вказівками лектора (таблиця «Зміст розділів»): анотація → вступ → завдання;
+% зміст — після анотації (розд. 4.1 посібника). Посібник ставить завдання після титулу,
+% але в разі розбіжності пріоритет за вимогами лектора.
+\input{chapters/annotation}
+\tableofcontents
+
+\input{chapters/00-intro}
+\input{chapters/task}
+\input{chapters/01-conceptual}
+\input{chapters/02-formal}
+\input{chapters/03-implementation}
+\input{chapters/04-experiments}
+\input{chapters/05-interpretation}
+\input{chapters/99-conclusions}
+\input{chapters/sources}
+
+% Лістинги додатків -- 8 пт і типові відступи класу
+\fvset{fontsize=\setstretch{1}\fontsize{8}{9}\selectfont, listparameters={}}
+\appendices
+\appendix{Лістинг алгоритму імітації}
+Програма (Java~23) підключає незмінене ядро \texttt{petri-math} 2.6.0
+(PetriObjModelPaint~\cite{petriobjmodelpaint}) як залежність. Пакет \texttt{ua.kpi.km.b14.petri} --
+розширення ядра, пакет \texttt{ua.kpi.km.b14.model} -- модель системи B14. Допоміжні класи (інтерфейс спостерігача \texttt{SimulationListener}, параметри прогону \texttt{RunSettings}, записи результатів
+\texttt{TypeMetrics} і \texttt{SimulationResult}, запис файлів, запуск із командного рядка) не
+наведено; повний код програми і скрипта аналізу (каталоги \texttt{sim/} і \texttt{experiments/})
+розміщено в репозиторії GitHub \repourl.
+\javafile{petri/Delay.java}
+\javafile{petri/StochasticTransition.java}
+\javafile{petri/ConflictResolver.java}
+\javafile{petri/PetriSimulator.java}
+\javafile{petri/PetriNetBuilder.java}
+\javafile{model/TaskType.java}
+\javafile{model/Strategy.java}
+\javafile{model/ModelParameters.java}
+\javafile{model/B14Net.java}
+\javafile{model/OutputCalculator.java}
+\javafile{model/B14Simulation.java}
+
+\appendix{Фрагмент протоколу подій}
+Протокол сформовано командою \texttt{verify} ($\gamma = 0{,}6$, seed 20261118, файли
+\texttt{experiments/verification/protocol\_s3.txt} і \texttt{protocol\_s1.txt}). Стовпці: момент
+часу; переходи, з яких вийшли маркери; переходи, у які увійшли маркери (у порядку запуску); стан
+після події -- кількість маркерів у позиціях QA, QB, QC, Mem, RC і кількість активних каналів
+переходів ServA, ServB, ServC.
+
+\medskip\noindent\textbf{Стратегія 3 (C $>$ B $>$ A), $t \in [0;\,96]$~хв}
+\codeinput[firstline=1, lastline=50]{../experiments/verification/protocol_s3.txt}
+
+\medskip\noindent\textbf{Стратегія 1 (A $>$ B $>$ C), $t \in [0;\,38]$~хв}
+\codeinput[firstline=1, lastline=23]{../experiments/verification/protocol_s1.txt}
+
+\appendix{Лістинг програми верифікації та експериментального дослідження}
+Пакети \texttt{verification} і \texttt{experiment}, статистична частина скрипта
+\texttt{experiments/analysis.py}, повні результати верифікації (підрозділ~\ref{sec:verification}),
+коефіцієнти регресії й відгуки за типами завдань. Класи \texttt{EventProtocol},
+\texttt{ConfidenceInterval}, пакети \texttt{io} і \texttt{app} не наведено (повний код і
+результати прогонів -- у репозиторії \repourl).
+
+\input{media/tab-verif-variation-full}
+\javafile{verification/InvariantMonitor.java}
+\javafile{verification/MmcQueue.java}
+\javafile{verification/VerificationRunner.java}
+\javafile{experiment/ResponseTrajectory.java}
+\javafile{experiment/ExperimentRunner.java}
+
+\par\medskip\noindent Фрагменти файлу \texttt{experiments/analysis.py} (Python, бібліотека
+SciPy~\cite{scipy}):
+\pyfrag{Критерій~\eqref{eq:criterion} вибору часу моделювання}{143}{151}
+\pyfrag{Кількість прогонів за нерівністю Чебишова і критерій згоди $\chi^2$}{269}{290}
+\pyfrag{Критерій Кохрена}{406}{417}
+\pyfrag{Дисперсійний аналіз впливу стратегії на кожному рівні $\gamma$}{476}{496}
+\pyfrag{Регресійний аналіз: метод найменших квадратів, критерії Стьюдента і Фішера}{540}{596}
+
+\input{media/tab-exp-regression}
+\input{media/tab-exp-bytype}
+\end{document}
